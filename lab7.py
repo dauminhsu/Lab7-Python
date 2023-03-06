@@ -5,7 +5,6 @@ import csv
 from pandas import *
 import matplotlib.pyplot as plt
 import seaborn as sns
-from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.animation import FuncAnimation, PillowWriter
 
 
@@ -58,11 +57,12 @@ def task_2():
         plt.show()
 
     def density_curve(values, labels):
-        # Biến đổi số
+        # Biến đổi khoảng
+        # Vì khoảng không đồng nhất (một cái 0 -> 100, 0 -> 350)
+
         min_val = min(values[2])
         max_val = max(values[2])
 
-        # Vì khoảng ko đồng nhất (một cái 0 -> 100, 0 -> 350)
         dataset = DataFrame(
             {
                 labels[0]: values[0],
@@ -185,7 +185,7 @@ def task_4():
 
     # Сохранение анимации в файл
     writer = PillowWriter(fps=20)
-    anim.save('sin_animation.gif', writer=writer)
+    anim.save('task4.gif', writer=writer)
 
     plt.show()
 
