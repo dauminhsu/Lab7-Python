@@ -33,32 +33,32 @@ def task_1():
 
 
 def task_2():
-    # Tạo biểu đồ điểm theo 2 cột, với các label (nhãn) tương ứng
+    # Чтобы создать диаграмму результатов с двумя столбцами и соответствующими метками
     def scatter_graph(values, labels):
         fig, ax1 = plt.subplots()
-        # Tạo ax2 để mình có 2 trục y
+        # Создать ax2, чтобы у меня было 2 оси y
         ax2 = ax1.twinx()
         ax1.set_xlabel(labels[0])
 
-        # Trục đầu tiên cho điểm màu xanh
+        # Первая ось дает синюю точку
         ax1.scatter(values[0], values[1], label=labels[1], color='dodgerblue')
         ax1.set_ylabel(labels[1], color='dodgerblue')
 
-        # Trục thứ 2 cho điểm màu cam
+        # 2-я ось для оранжевой точки
         ax2.scatter(values[0], values[2], label=labels[2], color='orange')
         ax2.set_ylabel(labels[2], color='orange')
 
-        # Hiện chú thích
+        # Показать комментарии
         fig.legend(loc="upper right")
 
-        # Hiện đồ thị lên
+        # Показать график вверх
         plt.title(f"График {labels[1]} и {labels[2]} от {labels[0]}")
         plt.xlim(0, 38)
         plt.show()
 
     def density_curve(values, labels):
-        # Biến đổi khoảng
-        # Vì khoảng không đồng nhất (một cái 0 -> 100, 0 -> 350)
+        # Преобразуйте диапазон, чтобы вернуть его к однородности
+        # Потому что пространство неоднородно
 
         min_val = min(values[2])
         max_val = max(values[2])
@@ -68,7 +68,7 @@ def task_2():
                 labels[0]: values[0],
                 labels[1]: values[1],
                 # [x, y] -> [u, v] ~ [0, y - x] -> [0, v - u]
-                # i thuộc [x, y] -> (i - x) / (y - x) * (v - u) + u
+                # i принадлежит [x, y] -> (i - x) / (y - x) * (v - u) + u
                 labels[2]: [((i - min_val) * 100) /
                             (max_val - min_val) for i in values[2]]
             }
@@ -76,19 +76,19 @@ def task_2():
 
         fig, ax1 = plt.subplots()
 
-        # Dựng histogram và đường cong mật độ cho cột 4
+        # Построить гистограмму и кривую плотности для столбца 4
         sns.distplot(dataset[[labels[1]]], label=labels[1],
                      color='dodgerblue')
 
-        # Dựng histogram và đường cong mật độ cho cột 16
+        # Построить гистограмму и кривую плотности для столбца 16
         sns.distplot(dataset[[labels[2]]],
                      label=labels[2], color='orange')
 
-        # Chú thích
+        # Примечание
         ax1.set_ylabel("Плотность")
         fig.legend(loc="upper right")
 
-        # Hiện đồ thị
+        # Показать график
         plt.title(f'График корреляции {labels[1]} и {labels[2]}')
         plt.show()
 
@@ -140,7 +140,7 @@ def task_3():
 
     line, = ax.plot([], [], [], lw=2)
 
-    # Vẽ từ từ 0 -> i - 1
+    # Рисуйте медленно, как анимация 0 -> i - 1
     # Функция, которая будет вызываться на каждом кадре анимации
     def animate(i):
         line.set_data(x[:i], y[:i])
